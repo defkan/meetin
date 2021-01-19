@@ -83,15 +83,25 @@ def update_user_detail(userId,form):
     urlInstagram = %s,
     urlTwitter = %s,
     urlFacebook = %s,
-    occupation = %s
+    occupation = %s,
+    gender = %s
     WHERE userId = %s
     '''
     if(form.photoUrl.data):
         photoUrl = 'img/profile/' + photo_save_profile(form.photoUrl.data)
     else:
         photoUrl = temp['photoUrl']
-
-    values = (form.university.data,photoUrl,form.birthDate.data,form.bio.data,form.urlInstagram.data,form.urlTwitter.data,form.urlFacebook.data,form.occupation.data,userId )
+    gender=''
+    if(form.gender.data):
+        if(form.gender.data==1):
+            gender = 'Male'
+        elif(form.gender.data==2):
+            gender = 'Female'
+        elif(form.gender.data==3):
+            gender='Other'
+    
+        
+    values = (form.university.data,photoUrl,form.birthDate.data,form.bio.data,form.urlInstagram.data,form.urlTwitter.data,form.urlFacebook.data,form.occupation.data,gender,userId )
     cursor.execute(sql,values)
     sql_connection.commit()
 def create_user(username,email,password):

@@ -54,7 +54,7 @@ def login():
 
                 account = User(account)
                 
-                login_user(account,remember = True)
+                login_user(account,remember = form.remember.data)
                 
                 next_page = request.args.get('next')
                 flash('Logged In','success')
@@ -151,6 +151,7 @@ def edit_account():
     form.urlTwitter.default = usr['urlTwitter']
     form.urlFacebook.default = usr['urlFacebook']
     form.occupation.default = usr['occupation']
+    form.gender.default = usr['gender']
     form.process()
     photo = usr['photoUrl']
     return render_template('edit_profile.html',usr = usr,form = form,photo = photo)

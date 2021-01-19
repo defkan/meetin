@@ -26,6 +26,13 @@
                 <div class="col-sm-7">
                     <div class="row">
                         <div class="col-sm-12">
+                            <div class="form-group"> {{ form.gender.label(class="control-label") }} {{ form.gender }} {% if form.gender.errors %} {% for error in form.gender.errors %}
+                                <span class="text-danger">{{ error }}</span> {% endfor %} {% endif %}
+                                
+
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
                             <div class="form-group"> {{ form.university.label(class="control-label") }} {{ form.university(class="form-control border-form-control") }} {% if form.university.errors %} {% for error in form.university.errors %}
                                 <span class="text-danger">{{ error }}</span> {% endfor %} {% endif %}
                                 <div class="mt-2" style="width: 5rem;">
