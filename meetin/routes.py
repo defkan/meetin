@@ -19,7 +19,13 @@ def auth():
         return True
     else:
         return False
-
+@app.errorhandler(404)
+def page_not_found(e):
+    if(auth()):
+        usr = get_user_detail(current_user.id)
+        return render_template('404.html',usr = usr), 404
+    else:
+        return redirect(url_for('login'))
 @app.route('/',methods=['GET'])
 @app.route('/home',methods=['GET'])
 def home():
