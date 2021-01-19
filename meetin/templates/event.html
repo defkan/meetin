@@ -1,0 +1,171 @@
+{%extends 'base.html'%} {% include 'navbar.html' %} {%block body%}
+<div id="content-wrapper">
+    <div class="container-fluid upload-details">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="main-title">
+                    <h6 class="text-uppercase text-black text-bold">EVENT -- {%if event.happened %}Happened {%else%} Upcoming {%endif%}
+                    </h6>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <img style="width: 13rem;border-radius: 50%;" class="img-fluid mt-4 mb-3" src="{{url_for('static',filename=event.eventPhotoUrl)}}">
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <label for="" class="my-label">OWNER</label>
+
+                    </div>
+                </div>
+                <div class="row mt-2">
+
+
+                    <div class="col-sm-5">
+                        <img class="img-fluid" src="{{url_for('static',filename=owner.photoUrl)}}" style="border-radius:50%" alt="">
+                    </div>
+                    <div class="col-sm-7">
+
+
+                        <span class="my-content">{{owner.username}}</span>
+                        <a class="btn btn-outline-primary btn-block btn-sm mt-2" href="{{url_for('profile',username=owner.username)}}">SEE OWNER PROFILE</a>
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <div class="row">
+                    <div class="col-sm-6">
+
+
+                        <label class="control-label text-dark">Event Name</label>
+                        <span class="form-control show-p border-form-control">{{event.eventName}}</span>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <label class="control-label text-dark">Category</label>
+                        <span class="form-control border-form-control show-p">{{event.categoryName}}</span>
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label class="control-label text-dark">Description</label>
+                        <span style="height: auto" class="form-control show-p">{{event.description}}</span>
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="control-label text-dark">Event Date</label>
+                        <span class="form-control show-p">{{event.date}}</span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-8">
+
+                        <label class="control-labe text-dark">Event Link</label>
+                        <a class="form-control border-form-control show-p" href="{{event.eventLink}}" target='_blank'>{{event.eventLink}}</a>
+                    </div>
+                    <div class="col-sm-2 mt-3">
+
+                        {%if owner.userId == usr.userId %}
+                        <a class="btn btn-outline-primary btn-block btn-sm" href="{{url_for('edit_event',eventId = event.eventId)}}">EDIT</a> {%endif%}
+                    </div>
+                    <div class="col-sm-2 mt-3">
+
+                        {%if owner.userId == usr.userId %}
+                        <form method="POST" action="{{url_for('event_delete',eventId=event.eventId)}}">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                            <button type="submit" class="btn btn-outline-primary btn-block btn-sm">DELETE</button>
+                        </form>
+                        {%else%}
+                        <a href="{{url_for('enroll',eventId = event.eventId)}}" class="btn btn-outline-primary btn-block btn-lg">ENROLL</button></a> {%endif%}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="row mb-2 mt-4">
+
+                <div class="col-lg-12">
+                    <div class="main-title">
+                        <h6 class="text-uppercase text-black">
+                            <span class="my-label px-3 py-1 mx-3" style="display: inline-block; border: 2px solid  #826cfd">{{event.sub_count}} ATTENDIES</span></h6>
+                    </div>
+                </div>
+
+
+                {%if enrolled %}
+                <div class="row p-3">
+
+
+                    {%for event in enrolled%}
+                    <div class="col-sm-12">
+
+                        <div class="row">
+
+
+
+
+                            <div class="col-sm-4">
+                                <img class="img-fluid p-5" src="{{url_for('static',filename=event.photoUrl)}}" style="border-radius:50%" alt="">
+                            </div>
+                            <div class="col-sm-5 mt-5">
+                                <p>
+                                    <span class="my-label"> Username </span>
+                                    <span class="my-content">{{event.username}}</span>
+                                </p>
+                                <p>
+                                    <span class="my-label"> Reason </span>
+                                    <span class="my-content">{{event.reason}}</span>
+                                </p>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <p>
+                                            <a class="btn btn-outline-primary btn-block btn-sm" href="{{url_for('profile',username = event.username)}}">SEE PROFILE</a>
+                                        </p>
+                                    </div>
+                                    <div class="col-sm-8">
+
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                            <div class="col-sm-3">
+                                {%if usr.userId == event.userId%}
+                                <form action="{{url_for('unsubscribe',enrollmentId = event.enrollmentId)}}" method="POST">
+                                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                                    <button type="submit" class="btn btn-outline-primary btn-block btn-sm">UNSUBSCRIBE</button>
+                                </form>
+                                {%endif%}
+                            </div>
+
+                        </div>
+                    </div>
+                    {%endfor%}
+
+
+                </div>
+                {%endif%}
+
+
+
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>
+    </div>
+    {%endblock%}

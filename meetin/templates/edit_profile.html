@@ -1,0 +1,105 @@
+{%extends 'base.html'%} {% include 'navbar.html' %} {%block body%}
+
+<div id="content-wrapper">
+    <div class="container-fluid upload-details">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="main-title">
+                    <h6 class="text-uppercase text-black text-bold">EDIT PROFILE</h6>
+                </div>
+            </div>
+        </div>
+        <form method="POST" action="{{url_for('edit_account')}}" enctype="multipart/form-data">
+            {{form.hidden_tag()}}
+            <div class="row">
+                <div class="col-sm-4">
+
+                    <img style="border-radius: 50%;" class="img-fluid mt-4 mb-3" src="{{url_for('static',filename = photo)}}">
+
+                    <div class="form-group">
+                        {{ form.photoUrl.label(class="control-label") }} {{ form.photoUrl(class="form-control-file") }} {% if form.photoUrl.errors %} {% for error in form.photoUrl.errors %}
+                        <span class="text-danger">{{ error }}</span> {% endfor %} {% endif %}
+
+                    </div>
+                </div>
+                <div class="col-sm-1"></div>
+                <div class="col-sm-7">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group"> {{ form.university.label(class="control-label") }} {{ form.university(class="form-control border-form-control") }} {% if form.university.errors %} {% for error in form.university.errors %}
+                                <span class="text-danger">{{ error }}</span> {% endfor %} {% endif %}
+                                <div class="mt-2" style="width: 5rem;">
+                                    <a type="submit" class="btn btn-outline-primary btn-block btn-sm" href="{{url_for('university_add')}}">Add University</a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group"> {{ form.birthDate.label(class="control-label") }} {{ form.birthDate(class="form-control border-form-control",placeholder='day/month/year') }} {% if form.birthDate.errors %} {% for error in form.birthDate.errors %}
+                                <span class="text-danger">{{ error }}</span> {% endfor %} {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group"> {{ form.bio.label(class="control-label") }} {{ form.bio(class="form-control border-form-control") }} {% if form.bio.errors %} {% for error in form.bio.errors %}
+                                <span class="text-danger">{{ error }}</span> {% endfor %} {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <i class="fab fa-instagram align-bottom float-left mr-2" style="font-size: 2rem;vertical-align:middle;color: #826cfd"></i>
+
+                    <div class="form-group align-top float-left "> {{ form.urlInstagram(class="form-control border-form-control") }} {% if form.urlInstagram.errors %} {% for error in form.urlInstagram.errors %}
+                        <span class="text-danger">{{ error }}</span> {% endfor %} {% endif %}
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <i class="fab fa-twitter align-bottom float-left mr-2" style="font-size: 2rem;vertical-align:middle;color: #826cfd"></i>
+
+                    <div class="form-group align-top float-left "> {{ form.urlTwitter(class="form-control border-form-control") }} {% if form.urlTwitter.errors %} {% for error in form.urlTwitter.errors %}
+                        <span class="text-danger">{{ error }}</span> {% endfor %} {% endif %}
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <i class="fab fa-facebook align-bottom float-left mr-2" style="font-size: 2rem;vertical-align:middle;color: #826cfd"></i>
+
+                    <div class="form-group align-top float-left "> {{ form.urlFacebook(class="form-control border-form-control") }} {% if form.urlFacebook.errors %} {% for error in form.urlFacebook.errors %}
+                        <span class="text-danger">{{ error }}</span> {% endfor %} {% endif %}
+                    </div>
+                </div>
+
+
+
+
+
+
+            </div>
+
+
+            <div class="row">
+                <div class="col-sm-8"></div>
+                <div class="col-sm-2">
+                    <a href="{{url_for('profile',username=usr.username)}}" class="btn btn-outline-primary btn-block btn-lg">CANCEL</a>
+                </div>
+                <div class="col-sm-2">
+                    <button type="submit" class="btn btn-outline-primary btn-block btn-lg">SAVE</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+    <!-- /.container-fluid -->
+
+</div>
+</div>
+{%endblock%}

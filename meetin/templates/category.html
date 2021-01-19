@@ -1,0 +1,46 @@
+{%extends 'base.html'%} {% include 'navbar.html' %} {%block body%}
+
+<div id="content-wrapper">
+    <div class="container-fluid upload-details">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="main-title">
+                    <h6 class="text-uppercase text-black text-bold">Category</h6>
+                </div>
+            </div>
+        </div>
+        <form method="POST" action="{{url_for('add_category')}}" enctype="multipart/form-data">
+            {{form.hidden_tag()}}
+            <div class="row">
+
+                <div class="col-sm-12">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group"> <label class="control-label">Category Name</label><span class="required">*</span> {{ form.field(class="form-control border-form-control") }} {% if form.field.errors %} {% for error in form.field.errors %}
+                                <span class="text-danger">{{ error }}</span> {% endfor %} {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+
+
+
+            <div class="row">
+                <div class="col-sm-10"></div>
+
+                <div class="col-sm-2">
+                    <button type="submit" class="btn btn-outline-primary btn-block btn-lg">SAVE</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+    <!-- /.container-fluid -->
+
+</div>
+</div>
+{%endblock%}

@@ -1,0 +1,90 @@
+{%extends 'base.html'%}
+
+{% include 'navbar.html' %}
+{%block body%}
+
+<div id="content-wrapper">
+    <div class="container-fluid upload-details">
+       <div class="row">
+          <div class="col-lg-12">
+             <div class="main-title">
+                <h6 class="text-uppercase text-black text-bold">Create Event</h6>
+             </div>
+          </div>
+       </div>
+       <form method="POST" action = "{{action}}" enctype="multipart/form-data">
+           {{form.hidden_tag()}}
+          <div class="row">
+             <div class="col-sm-4">
+                
+                    <img style="border-radius: 50%;" class="img-fluid mt-4 mb-3" src="{{url_for('static',filename = photo)}}">
+
+                <div class="form-group">
+                    {{ form.eventPhotoUrl.label(class="control-label") }} {{ form.eventPhotoUrl(class="form-control-file") }} {% if form.eventPhotoUrl.errors %} {% for error in form.eventPhotoUrl.errors %}
+                    <span class="text-danger">{{ error }}</span> {% endfor %} {% endif %}
+            
+                </div>
+             </div>
+             <div class="col-sm-1"></div>
+             <div class="col-sm-7">
+                 <div class="row">
+                     <div class="col-sm-12">
+                          <div class="form-group"> {{ form.eventName.label(class="control-label") }}<span class="required">*</span> {{ form.eventName(class="form-control border-form-control") }} {% if form.eventName.errors %} {% for error in form.eventName.errors %}
+                    <span class="text-danger">{{ error }}</span> {% endfor %} {% endif %}
+                     </div>
+                    </div>
+                 </div>
+                     <div class="row">
+                         <div class="col-sm-12">
+                        <div class="form-group"> {{ form.eventdate.label(class="control-label") }}<span class="required">*</span> {{ form.eventdate(class="form-control border-form-control",placeholder='day/month/year') }} {% if form.eventdate.errors %} {% for error in form.eventdate.errors %}
+                  <span class="text-danger">{{ error }}</span> {% endfor %} {% endif %}
+                   </div>
+                     </div></div>
+
+                     <div class="row">
+                        <div class="col-sm-12">
+                       <div class="form-group"> {{ form.category.label(class="control-label") }}<span class="required">*</span> {{ form.category(class="form-control border-form-control") }} {% if form.category.errors %} {% for error in form.eventPhotoUrl.errors %}
+                 <span class="text-danger">{{ error }}</span> {% endfor %} {% endif %}
+                 <div class="mt-2" style="width: 5rem;" >
+                    <a type="submit" class="btn btn-outline-primary btn-block btn-sm"
+                        href="{{url_for('add_category')}}">Add Category</a>
+                </div>
+                  </div>
+                    </div></div>
+                 
+             
+               
+             </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+               <div class="form-group"> {{ form.description.label(class="control-label") }} {{ form.description(class="form-control border-form-control") }} {% if form.description.errors %} {% for error in form.description.errors %}
+                   <span class="text-danger">{{ error }}</span> {% endfor %} {% endif %}
+                    </div>
+              
+            </div>
+         </div>
+          <div class="row">
+             <div class="col-sm-12">
+                <div class="form-group"> {{ form.eventLink.label(class="control-label") }}<span class="required">*</span></label> {{ form.eventLink(class="form-control border-form-control") }} {% if form.eventLink.errors %} {% for error in form.eventLink.errors %}
+                    <span class="text-danger">{{ error }}</span> {% endfor %} {% endif %}
+                     </div>
+               
+             </div>
+          </div>
+          
+          <div class="row">
+              <div class="col-sm-10"></div>
+            <div class="col-sm-2">
+                <button type="submit" class="btn btn-outline-primary btn-block btn-lg">Save</button>
+              
+            </div>
+         </div>
+        
+       </form>
+    </div>
+    <!-- /.container-fluid -->
+
+ </div>
+</div>
+ {%endblock%}

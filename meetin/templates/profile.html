@@ -1,0 +1,150 @@
+{%extends 'base.html'%} {% include 'navbar.html' %} {%block body%}
+<div id="content-wrapper">
+    <div class="container-fluid upload-details">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="main-title">
+                    <h6 class="text-uppercase text-black text-bold">Profile</h6>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <img style="width: 13rem;border-radius: 50%;" class="img-fluid mt-4 mb-3" src="{{url_for('static',filename=detail.photoUrl)}}">
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <a href="https://instagram.com/{{detail.urlInstagram}}">
+                                    <i class="fab fa-instagram " style="font-size: 2rem;vertical-align:middle;color: #826cfd"></i>&nbsp;&nbsp;{{detail.urlInstagram}}</a>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <a href="https://twitter.com/{{detail.urlTwitter}}">
+                                    <i class="fab fa-twitter" style="font-size: 2rem;vertical-align:middle;color: #826cfd"></i>&nbsp;&nbsp; {{detail.urlTwitter}}</a>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <a href="https://facebook.com/{{detail.urlFacebook}}">
+                                    <i class="fab fa-facebook" style="font-size: 2rem;vertical-align:middle;color: #826cfd"></i>&nbsp;&nbsp; {{detail.urlFacebook}}</a>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <div class="row">
+                    <div class="col-sm-6">
+
+
+                        <label class="control-label text-dark">Username</label>
+                        <span class="form-control show-p border-form-control">{{detail.username}}</span>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <label class="control-label text-dark">Univeristy</label>
+                        <span class="form-control border-form-control show-p">{{detail.universityName}}</span>
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label class="control-labe text-dark">Bio</label>
+                        <span style="height: auto" class="form-control border-form-control show-p">{{detail.bio}}</span>
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="control-label text-dark">Birth Date</label>
+                        <span class="form-control show-p">{{detail.birthdate}}</span>
+                    </div>
+                </div>
+                <div class="row mt-5">
+                    <div class="col-sm-6">
+                    </div>
+                    <div class="col-sm-3">
+                        {%if detail.userId == usr.userId%}
+                        <form method="POST" action="{{url_for('delete_my_account')}}">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                            <button type="submit" class="btn btn-outline-primary btn-block btn-sm">DELETE ACCOUNT</button>
+                        </form>
+                        {%endif%}
+                    </div>
+                    <div class="col-sm-3">
+                        {%if detail.userId == usr.userId%}
+                        <a href="{{url_for('edit_account')}}" class="btn btn-outline-primary btn-block btn-sm">EDIT ACCOUNT</a> {%endif%}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-2 mt-4">
+            <div class="col-lg-12">
+                <div class="main-title">
+                    <h6>{{detail.username}} ATTEND</h6>
+                </div>
+            </div>
+        </div>
+        {%if enrolled %}
+        <div class="row p-3">
+
+
+            {%for event in enrolled%}
+            <div class="col-sm-3">
+
+                <a class="btn" href="{{url_for('event',eventId = event.eventId)}}">
+                    <img class="img-fluid" src="{{url_for('static',filename=event.eventPhotoUrl)}}" style="border-radius:50%" alt="">
+                    <p>{{event.eventName}}</p>
+                    {%if event.happened%} Happened: {%else%} Upcoming: {%endif%}
+                    <p>{{event.date}}</p>
+                </a>
+            </div>
+            {%endfor%}
+
+
+        </div>
+        {%endif%}
+        <div class="row mb-2 mt-4">
+            <div class="col-lg-12">
+                <div class="main-title">
+                    <h6>{{detail.username}} EVENTS</h6>
+                </div>
+            </div>
+        </div>
+        {%if user_event %}
+        <div class="row p-3">
+
+
+            {%for event in user_event%}
+            <div class="col-sm-3">
+
+                <a class="btn" href="{{url_for('event',eventId = event.eventId)}}">
+                    <img class="img-fluid" src="{{url_for('static',filename=event.eventPhotoUrl)}}" style="border-radius:50%" alt="">
+                    <p>{{event.eventName}}</p>
+                    {%if event.happened%} Upcoming: {%else%} Happened: {%endif%}
+                    <p>{{event.date}}</p>
+                </a>
+            </div>
+            {%endfor%}
+
+
+        </div>
+        {%endif%}
+    </div>
+    <!-- /.container-fluid -->
+
+</div>
+</div>
+{%endblock%}
