@@ -133,7 +133,7 @@
                 <a class="btn" href="{{url_for('event',eventId = event.eventId)}}">
                     <img class="img-fluid" src="{{url_for('static',filename=event.eventPhotoUrl)}}" style="border-radius:50%" alt="">
                     <p>{{event.eventName}}</p>
-                    {%if event.happened%} Upcoming: {%else%} Happened: {%endif%}
+                    {%if event.happened%}Happened:  {%else%} Upcoming: {%endif%}
                     <p>{{event.date}}</p>
                 </a>
             </div>
