@@ -27,6 +27,12 @@ def home():
         usr = get_user_detail(userId = current_user.id)
         categories = category_event_count()
         events = get_all_event()
+        today=date.today()
+        for each in events:
+            if( each['eventdate']<today):
+                each['happened'] = True
+            else:
+                each['happened'] = False
         return render_template('home.html',usr = usr,categories=categories,events = events)
     else:
         return redirect(url_for('login'))
@@ -151,7 +157,13 @@ def edit_account():
     form.urlTwitter.default = usr['urlTwitter']
     form.urlFacebook.default = usr['urlFacebook']
     form.occupation.default = usr['occupation']
-    form.gender.default = usr['gender']
+    if(usr['gender']=='Female'):
+        form.gender.default = 2
+    elif(usr['gender']=='Male'):
+        form.gender.default = 1
+    elif(usr['gender']=='Other'):
+        form.gender.default = 3
+    
     form.process()
     photo = usr['photoUrl']
     return render_template('edit_profile.html',usr = usr,form = form,photo = photo)
@@ -212,7 +224,7 @@ def open_event():
             flash('Failed to create event','danger')
     
     photo = 'img/event_photo/dummy.jpg'
-    return render_template('open_event.html',usr = usr,form = form,photo=photo,action = url_for('open_event') )
+    return render_template('open_event.html',usr = usr,form = form,title='Create',photo=photo,action = url_for('open_event') )
 
 
 @app.route("/edit_event/<int:eventId>", methods=['GET', 'POST'])
@@ -222,12 +234,13 @@ def edit_event(eventId):
     usr= get_user_detail(userId=current_user.id)
     today = date.today()
     event = get_event(eventId = eventId)
+    
     print(event)
     if(event['adminId']!= usr['userId']):
         return redirect(url_for('event',eventId = event['eventId']))
 
     form =  EventForm()
-    form.category.choice = choice(get_all_category())
+    form.category.choices = choice(get_all_category())
     if form.validate_on_submit():
         
         try:
@@ -243,7 +256,7 @@ def edit_event(eventId):
     form.eventdate.default = event['eventdate']
     form.process()
     photo = event['eventPhotoUrl']
-    return render_template('open_event.html',usr = usr,form = form,photo=photo,action = url_for('edit_event',eventId = eventId) )
+    return render_template('open_event.html',usr = usr,form = form,photo=photo,title='Edit',action = url_for('edit_event',eventId = eventId) )
 
 @app.route("/delete_event/<int:eventId>",methods=['POST'])
 @login_required

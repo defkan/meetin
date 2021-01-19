@@ -39,7 +39,7 @@ class UpdateProfileform(FlaskForm):
     urlTwitter = StringField('Twitter')
     urlFacebook = StringField('Facebook')
     occupation = StringField('Occupation')
-    gender = RadioField('Gender', choices=[(1,'Male'),(2,'Female'),(3,'Other')],coerce = int)
+    gender = RadioField('Gender', choices=[(1,'Male'),(2,'Female'),(3,'Other')],coerce = int,validators=[Optional()])
     save = SubmitField(label = ('Save'))
 
 class EventForm(FlaskForm):
